@@ -1,0 +1,31 @@
+name: Build CV
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-cv:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Install Nix (Determinate Systems)
+      uses: DeterminateSystems/nix-installer-action@v3
+        
+    - name: Build CV
+      run: |
+        cd cv
+        nix build .
+
+    - name: Upload CV artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: cv-pdf
+        path: result/cv.pdf
+        retention-days: 30 
