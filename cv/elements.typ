@@ -5,6 +5,10 @@
   #box(width: 1fr, line(stroke: 0.9pt, length: 100%))
 ]
 
+#let hline-header() = [
+  #box(width: 1fr, line(stroke: 0.9pt + colors.header, length: 100%))
+]
+
 #let github(handle) = {
   fa-github(fill: colors.accent)
   h(1pt)
@@ -54,7 +58,7 @@
 #let section(title) = {
   v(3pt)
   text(size: 15pt, fill: colors.header, smallcaps(title))
-  hline()
+  hline-header()
 }
 
 #let experience(company, title, location, date, body) = {
