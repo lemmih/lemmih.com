@@ -1,0 +1,28 @@
+{
+  "name": "cv-lemmih-com",
+  "compatibility_date": "2025-07-05",
+  "assets": {
+    // The path to the directory containing the `index.html` file to be served at `/`
+    "directory": "./result"
+  },
+  "routes": [
+    {
+      "pattern": "cv.lemmih.com",
+      "zone_name": "lemmih.com",
+      "custom_domain": true
+    }
+  ],
+  "observability": {
+    "enabled": true
+  },
+  "build": {
+    "command": "nix build ."
+  },
+  "env": {
+    "prebuilt": {
+      "build": {
+        "command": ""
+      }
+    }
+  }
+}
