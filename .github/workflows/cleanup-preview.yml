@@ -1,4 +1,4 @@
-name: Cleanup PR Preview
+name: Cleanup Food App PR Preview
 
 on:
   pull_request:
