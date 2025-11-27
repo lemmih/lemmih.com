@@ -29,8 +29,12 @@
         wasmToolchain = rustToolchain.override {
           targets = [ "wasm32-unknown-unknown" ];
         };
-        craneLib = (crane.mkLib pkgs).overrideToolchain rustToolchain;
-        craneLibWasm = (crane.mkLib pkgs).overrideToolchain wasmToolchain;
+         craneLib = (crane.mkLib pkgs).overrideToolchain rustToolchain;
+         craneLibWasm = (crane.mkLib pkgs).overrideToolchain wasmToolchain;
+         # Configure build parallelism to reduce disk/memory pressure in CI
+         buildJobsEnv = pkgs.lib.optionalAttrs (builtins.getEnv "CI" != "") {
+           CARGO_BUILD_JOBS = "2";
+         };
         wranglerPkg = wrangler.packages.${system}.default;
         wasmBindgenVersion = "0.2.105";
         wasmBindgenCli = pkgs.rustPlatform.buildRustPackage {
@@ -60,14 +64,14 @@
           pname = "food-lemmih-com-worker";
           cargoExtraArgs = "--locked --package food-lemmih-com-worker";
         };
-        e2eArgs = {
-          inherit src;
-          strictDeps = true;
-          pname = "food-lemmih-com-e2e-tests";
-          cargoExtraArgs = "--locked --package food-lemmih-com-e2e-tests";
-          cargoHash = fakeHash;
-          cargoLock = ./Cargo.lock;
-        };
+         e2eArgs = {
+           inherit src;
+           strictDeps = true;
+           pname = "food-lemmih-com-e2e-tests";
+           cargoExtraArgs = "--locked --package food-lemmih-com-e2e-tests";
+           cargoHash = fakeHash;
+           cargoLock = ./Cargo.lock;
+         } // buildJobsEnv;
         clientArtifacts = craneLibWasm.buildDepsOnly clientArgs;
         workerArtifacts = craneLibWasm.buildDepsOnly workerArgs;
         e2eTests = craneLib.buildPackage (e2eArgs // {
