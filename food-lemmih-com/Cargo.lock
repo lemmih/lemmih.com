@@ -509,6 +509,8 @@ dependencies = [
  "console_log",
  "food-lemmih-com-app",
  "leptos",
+ "leptos_meta",
+ "leptos_router",
  "log",
  "wasm-bindgen",
 ]
@@ -533,6 +535,8 @@ dependencies = [
  "leptos",
  "leptos_axum",
  "leptos_config",
+ "leptos_meta",
+ "leptos_router",
  "log",
  "tower",
  "tower-service",
