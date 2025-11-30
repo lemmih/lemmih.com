@@ -8,9 +8,7 @@ use leptos_axum::{generate_route_list, LeptosRoutes};
 use leptos_config::LeptosOptions;
 use std::sync::Arc;
 use tower_service::Service;
-use worker::{
-    event, Context, Env, HttpRequest, Request as WorkerRequest, Result,
-};
+use worker::{event, Context, Env, HttpRequest, Result};
 
 fn router(env: Env) -> Router<()> {
     let leptos_options = LeptosOptions::builder()
@@ -42,10 +40,7 @@ pub async fn fetch(
 
     let method = req.method().clone();
     let path = req.uri().path().to_string();
-    let worker_req = WorkerRequest::try_from(req)?;
     log::info!("fetch called for {} {}", method, path);
-
-    let req = worker::HttpRequest::try_from(worker_req)?;
 
     Ok(router(env).call(req).await?)
 }

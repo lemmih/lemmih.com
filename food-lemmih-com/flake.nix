@@ -250,11 +250,6 @@
       };
       webappPath = website;
       e2eBinPath = e2eTests;
-      e2eRunner = pkgs.writeShellApplication {
-        name = "food-lemmih-com-e2e-tests";
-        runtimeInputs = with pkgsUnstable; [cargo rustc];
-        text = builtins.readFile ./nix/e2e-runner.sh;
-      };
     in {
       devShells.default = pkgs.mkShell {
         packages = with pkgs; [

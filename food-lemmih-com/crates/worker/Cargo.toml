@@ -8,9 +8,6 @@ publish = false
 path = "src/lib.rs"
 crate-type = ["cdylib"]
 
-[features]
-default = []
-
 [dependencies]
 axum = { workspace = true }
 console_error_panic_hook = { workspace = true }
