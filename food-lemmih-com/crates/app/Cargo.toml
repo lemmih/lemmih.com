@@ -8,13 +8,8 @@ publish = false
 path = "src/lib.rs"
 crate-type = ["cdylib", "rlib"]
 
-[features]
-default = ["ssr", "hydrate"]
-ssr = ["leptos/ssr", "leptos_router/ssr", "leptos_meta/ssr"]
-hydrate = ["leptos/csr", "leptos/hydrate"]
-
 [dependencies]
-leptos = { workspace = true }
-leptos_router = { workspace = true }
+leptos = { workspace = true, features = ["ssr", "csr", "hydrate"] }
+leptos_router = { workspace = true, features = ["ssr"] }
 leptos_config = { workspace = true }
-leptos_meta = { workspace = true }
+leptos_meta = { workspace = true, features = ["ssr"] }
