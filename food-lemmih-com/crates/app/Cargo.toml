@@ -9,7 +9,7 @@ path = "src/lib.rs"
 crate-type = ["cdylib", "rlib"]
 
 [features]
-default = ["ssr"]
+default = ["ssr", "hydrate"]
 ssr = ["leptos/ssr", "leptos_router/ssr", "leptos_meta/ssr"]
 hydrate = ["leptos/csr", "leptos/hydrate"]
 

@@ -9,8 +9,7 @@ path = "src/lib.rs"
 crate-type = ["cdylib"]
 
 [features]
-default = ["ssr"]
-ssr = []
+default = []
 
 [dependencies]
 axum = { workspace = true }
