@@ -134,57 +134,39 @@ async fn test_css_is_valid_tailwind(runner: &TestRunner) -> Result<()> {
 // Test Runner
 // ============================================================================
 
+macro_rules! run_tests {
+    ($runner:expr; $( $name:literal => $test:ident ),* $(,)? ) => {{
+        let test_names: &[&str] = &[$($name),*];
+        let total = test_names.len();
+        println!("Running {} tests...\n", total);
+
+        let mut idx = 0;
+        $(
+            idx += 1;
+            print!("[{}/{}] {} ... ", idx, total, $name);
+            match $test($runner).await {
+                Ok(()) => println!("✅"),
+                Err(e) => {
+                    println!("❌");
+                    anyhow::bail!("Test '{}' failed: {}", $name, e);
+                }
+            }
+        )*
+
+        println!("\n✅ All {} tests passed!", total);
+        Ok::<(), anyhow::Error>(())
+    }};
+}
+
 #[tokio::main]
 async fn main() -> Result<()> {
     let runner = TestRunner::new().await?;
 
-    // List of all tests to run - each test is a name and an async function
-    let tests: Vec<(
-        &str,
-        Box<
-            dyn Fn(
-                    &TestRunner,
-                )
-                    -> std::pin::Pin<Box<dyn std::future::Future<Output = Result<()>> + '_>>
-                + Send
-                + Sync,
-        >,
-    )> = vec![
-        (
-            "Main page is reachable",
-            Box::new(|r| Box::pin(test_main_page_reachable(r))),
-        ),
-        (
-            "CSS link present in HTML",
-            Box::new(|r| Box::pin(test_css_link_present(r))),
-        ),
-        (
-            "CSS file is accessible",
-            Box::new(|r| Box::pin(test_css_file_accessible(r))),
-        ),
-        (
-            "CSS contains Tailwind classes",
-            Box::new(|r| Box::pin(test_css_contains_tailwind_classes(r))),
-        ),
-        (
-            "CSS is valid Tailwind output",
-            Box::new(|r| Box::pin(test_css_is_valid_tailwind(r))),
-        ),
-    ];
-
-    println!("Running {} tests...\n", tests.len());
-
-    for (i, (name, test_fn)) in tests.iter().enumerate() {
-        print!("[{}/{}] {} ... ", i + 1, tests.len(), name);
-        match test_fn(&runner).await {
-            Ok(()) => println!("✅"),
-            Err(e) => {
-                println!("❌");
-                anyhow::bail!("Test '{}' failed: {}", name, e);
-            }
-        }
-    }
-
-    println!("\n✅ All {} tests passed!", tests.len());
-    Ok(())
+    run_tests!(&runner;
+        "Main page is reachable" => test_main_page_reachable,
+        "CSS link present in HTML" => test_css_link_present,
+        "CSS file is accessible" => test_css_file_accessible,
+        "CSS contains Tailwind classes" => test_css_contains_tailwind_classes,
+        "CSS is valid Tailwind output" => test_css_is_valid_tailwind,
+    )
 }
