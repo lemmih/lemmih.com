@@ -9,7 +9,7 @@ cd food-lemmih-com
 wrangler dev
 ```
 
-The `wrangler dev` command calls `scripts/build-worker.sh`, which installs `worker-build` (into `.wrangler/bin`) the first time it is needed and then compiles the worker artifact under `build/worker`.
+The `wrangler dev` command uses Nix to build the worker via `nix build .#website`.
 
 ## End-to-end test
 

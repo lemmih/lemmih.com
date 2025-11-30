@@ -530,8 +530,6 @@ dependencies = [
  "console_error_panic_hook",
  "console_log",
  "food-lemmih-com-app",
- "getrandom 0.3.4",
- "http-body-util",
  "leptos",
  "leptos_axum",
  "leptos_config",
@@ -539,8 +537,6 @@ dependencies = [
  "tower",
  "tower-service",
  "wasm-bindgen",
- "wasm-bindgen-futures",
- "web-sys",
  "worker",
 ]
 
