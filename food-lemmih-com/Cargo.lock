@@ -508,9 +508,8 @@ dependencies = [
  "console_error_panic_hook",
  "console_log",
  "food-lemmih-com-app",
+ "getrandom 0.3.4",
  "leptos",
- "leptos_meta",
- "leptos_router",
  "log",
  "wasm-bindgen",
 ]
@@ -532,6 +531,7 @@ dependencies = [
  "console_error_panic_hook",
  "console_log",
  "food-lemmih-com-app",
+ "getrandom 0.3.4",
  "leptos",
  "leptos_axum",
  "leptos_config",

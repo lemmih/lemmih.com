@@ -11,10 +11,9 @@ crate-type = ["cdylib", "rlib"]
 [dependencies]
 console_error_panic_hook = { workspace = true }
 console_log = { workspace = true }
-food-lemmih-com-app = { path = "../app" }
-leptos = { workspace = true, features = ["hydrate"] }
-leptos_router = { workspace = true }
-leptos_meta = { workspace = true }
+food-lemmih-com-app = { path = "../app", default-features = false, features = ["hydrate"] }
+leptos = { workspace = true, features = ["csr", "hydrate"] }
 log = { workspace = true }
 wasm-bindgen = { workspace = true }
+getrandom = { workspace = true }
 
